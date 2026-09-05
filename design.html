@@ -289,8 +289,8 @@
 
           const maxDim = Math.max(size.x, size.y, size.z);
           const dist   = maxDim * 1.8;
-          controls.target.set(0, 0, 0);
-          camera.position.set(dist * 0.8, maxDim * 1.0, dist);
+          controls.target.set(0, -size.y * 0.25, 0);
+          camera.position.set(dist * 0.8, maxDim * 0.6, dist);
           controls.minDistance = maxDim * 0.15;
           controls.maxDistance = maxDim * 6;
           controls.update();
