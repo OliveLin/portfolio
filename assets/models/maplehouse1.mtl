@@ -1,5 +1,5 @@
 # Wavefront OBJ material file
-# Contains 85 materials
+# Contains 87 materials
 
 newmtl grass_block_top
 Ns 0
@@ -90,6 +90,19 @@ map_Ka tex/oak_log.png
 # for G3D, to make textures look blocky:
 interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
 map_Kd tex/oak_log.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl oak_log_top
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka tex/oak_log_top.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd tex/oak_log_top.png
 illum 2
 # d 1
 # Tr 0
@@ -973,6 +986,20 @@ map_Ka tex/stonecutter_side.png
 interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
 map_Kd tex/stonecutter_side.png
 map_d tex/stonecutter_side.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl stonecutter_bottom
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka tex/stonecutter_bottom.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd tex/stonecutter_bottom.png
+map_d tex/stonecutter_bottom.png
 illum 2
 # d 1
 # Tr 0
