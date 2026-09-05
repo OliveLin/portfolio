@@ -294,13 +294,12 @@
       () => showError('模型載入失敗，請確認檔案路徑')
     );
 
-      // Render loop
-      (function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
-      })();
-    }
+    // Render loop
+    (function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    })();
   </script>
 </body>
 </html>
