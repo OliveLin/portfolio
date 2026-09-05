@@ -175,7 +175,7 @@
           <span class="skill-chip">Minecraft Java Edition</span>
           <span class="skill-chip">小屋</span>
         </div>
-        <h2>小屋</h2>
+        <h2>紅葉小屋</h2>
         <div class="viewer-wrap" id="viewer1">
           <div class="viewer-loading" id="loading1">
             <div class="spin"></div>
@@ -219,96 +219,80 @@
   </script>
   <script type="module">
     import * as THREE from 'three';
-    import { OBJLoader }     from 'three/addons/loaders/OBJLoader.js';
-    import { MTLLoader }     from 'three/addons/loaders/MTLLoader.js';
+    import { GLTFLoader }    from 'three/addons/loaders/GLTFLoader.js';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-    initViewer(
-      document.getElementById('viewer1'),
-      document.getElementById('loading1'),
-      'assets/models/',
-      '1.mtl',
-      'house1.obj'
+    const wrap      = document.getElementById('viewer1');
+    const loadingEl = document.getElementById('loading1');
+
+    function showError(msg) {
+      loadingEl.innerHTML = `<span style="color:#f87171;font-size:0.85rem;">⚠ ${msg}</span>`;
+    }
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    wrap.appendChild(renderer.domElement);
+
+    // Scene
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x141414);
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 5000);
+
+    // Lights
+    scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+    const sun = new THREE.DirectionalLight(0xfff5e0, 1.4);
+    sun.position.set(1, 1.5, 1);
+    scene.add(sun);
+    const fill = new THREE.DirectionalLight(0xc8d8ff, 0.5);
+    fill.position.set(-1, 0.5, -1);
+    scene.add(fill);
+
+    // Controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping   = true;
+    controls.dampingFactor   = 0.07;
+    controls.autoRotate      = true;
+    controls.autoRotateSpeed = 0.7;
+    controls.addEventListener('start', () => { controls.autoRotate = false; });
+
+    // Resize
+    function resize() {
+      const w = wrap.clientWidth, h = wrap.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    new ResizeObserver(resize).observe(wrap);
+    resize();
+
+    // Load GLB
+    new GLTFLoader().load(
+      'assets/models/redhouse1.glb',
+      (gltf) => {
+        const obj    = gltf.scene;
+        const box    = new THREE.Box3().setFromObject(obj);
+        const center = box.getCenter(new THREE.Vector3());
+        const size   = box.getSize(new THREE.Vector3());
+        obj.position.sub(center);
+        scene.add(obj);
+
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const dist   = maxDim * 1.6;
+        camera.position.set(dist * 0.85, maxDim * 0.55, dist);
+        controls.minDistance = maxDim * 0.15;
+        controls.maxDistance = maxDim * 6;
+        controls.update();
+
+        loadingEl.classList.add('hidden');
+        setTimeout(() => { loadingEl.style.display = 'none'; }, 420);
+      },
+      null,
+      () => showError('模型載入失敗，請確認檔案路徑')
     );
-
-    function initViewer(wrap, loadingEl, basePath, mtlFile, objFile) {
-      // Renderer
-      const renderer = new THREE.WebGLRenderer({ antialias: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.outputColorSpace = THREE.SRGBColorSpace;
-      wrap.appendChild(renderer.domElement);
-
-      // Scene
-      const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x141414);
-
-      // Camera
-      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 5000);
-
-      // Lights
-      scene.add(new THREE.AmbientLight(0xffffff, 0.9));
-      const sun = new THREE.DirectionalLight(0xfff5e0, 1.4);
-      sun.position.set(1, 1.5, 1);
-      scene.add(sun);
-      const fill = new THREE.DirectionalLight(0xc8d8ff, 0.5);
-      fill.position.set(-1, 0.5, -1);
-      scene.add(fill);
-
-      // Controls
-      const controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableDamping  = true;
-      controls.dampingFactor  = 0.07;
-      controls.autoRotate     = true;
-      controls.autoRotateSpeed = 0.7;
-      controls.addEventListener('start', () => { controls.autoRotate = false; });
-
-      // Resize observer — keeps canvas matched to wrapper
-      function resize() {
-        const w = wrap.clientWidth;
-        const h = wrap.clientHeight;
-        renderer.setSize(w, h, false);
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-      }
-      new ResizeObserver(resize).observe(wrap);
-      resize();
-
-      function showError(msg) {
-        loadingEl.innerHTML = `<span style="color:#f87171;font-size:0.85rem;">⚠ ${msg}</span>`;
-      }
-
-      // Load MTL then OBJ
-      const mtlLoader = new MTLLoader();
-      mtlLoader.setPath(basePath);
-      mtlLoader.load(mtlFile, (materials) => {
-        materials.preload();
-        loadingEl.querySelector('span').textContent = '載入模型中…';
-        const objLoader = new OBJLoader();
-        objLoader.setMaterials(materials);
-        objLoader.setPath(basePath);
-        objLoader.load(
-          objFile,
-          (obj) => {
-            const box    = new THREE.Box3().setFromObject(obj);
-            const center = box.getCenter(new THREE.Vector3());
-            const size   = box.getSize(new THREE.Vector3());
-            obj.position.sub(center);
-            scene.add(obj);
-
-            const maxDim = Math.max(size.x, size.y, size.z);
-            const dist   = maxDim * 1.6;
-            camera.position.set(dist * 0.85, maxDim * 0.55, dist);
-            controls.minDistance = maxDim * 0.15;
-            controls.maxDistance = maxDim * 6;
-            controls.update();
-
-            loadingEl.classList.add('hidden');
-            setTimeout(() => { loadingEl.style.display = 'none'; }, 420);
-          },
-          null,
-          () => showError('OBJ 載入失敗，請確認檔案路徑')
-        );
-      }, null, () => showError('MTL 載入失敗，請確認檔案路徑'));
 
       // Render loop
       (function animate() {
