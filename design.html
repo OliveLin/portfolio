@@ -219,7 +219,8 @@
   </script>
   <script type="module">
     import * as THREE from 'three';
-    import { GLTFLoader }    from 'three/addons/loaders/GLTFLoader.js';
+    import { OBJLoader }     from 'three/addons/loaders/OBJLoader.js';
+    import { MTLLoader }     from 'three/addons/loaders/MTLLoader.js';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
     const wrap      = document.getElementById('viewer1');
@@ -269,29 +270,37 @@
     new ResizeObserver(resize).observe(wrap);
     resize();
 
-    // Load GLB
-    new GLTFLoader().load(
-      'assets/models/redhouse1.glb',
-      (gltf) => {
-        const obj    = gltf.scene;
-        const box    = new THREE.Box3().setFromObject(obj);
-        const center = box.getCenter(new THREE.Vector3());
-        const size   = box.getSize(new THREE.Vector3());
-        obj.position.sub(center);
-        scene.add(obj);
+    // Load OBJ + MTL
+    const mtlLoader = new MTLLoader();
+    mtlLoader.setPath('assets/models/');
+    mtlLoader.load('maplehouse1.mtl', (materials) => {
+      materials.preload();
+      const objLoader = new OBJLoader();
+      objLoader.setMaterials(materials);
+      objLoader.setPath('assets/models/');
+      objLoader.load(
+        'maplehouse1.obj',
+        (obj) => {
+          const box    = new THREE.Box3().setFromObject(obj);
+          const center = box.getCenter(new THREE.Vector3());
+          const size   = box.getSize(new THREE.Vector3());
+          obj.position.sub(center);
+          scene.add(obj);
 
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const dist   = maxDim * 1.6;
-        camera.position.set(dist * 0.85, maxDim * 0.55, dist);
-        controls.minDistance = maxDim * 0.15;
-        controls.maxDistance = maxDim * 6;
-        controls.update();
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const dist   = maxDim * 1.6;
+          camera.position.set(dist * 0.85, maxDim * 0.55, dist);
+          controls.minDistance = maxDim * 0.15;
+          controls.maxDistance = maxDim * 6;
+          controls.update();
 
-        loadingEl.classList.add('hidden');
-        setTimeout(() => { loadingEl.style.display = 'none'; }, 420);
-      },
-      null,
-      (e) => showError('載入失敗: ' + (e && e.message ? e.message : JSON.stringify(e)))
+          loadingEl.classList.add('hidden');
+          setTimeout(() => { loadingEl.style.display = 'none'; }, 420);
+        },
+        null,
+        (e) => showError('OBJ 載入失敗: ' + (e && e.message ? e.message : e))
+      );
+    }, null, (e) => showError('MTL 載入失敗: ' + (e && e.message ? e.message : e))
     );
 
     // Render loop
