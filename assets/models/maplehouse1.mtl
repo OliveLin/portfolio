@@ -1,5 +1,5 @@
 # Wavefront OBJ material file
-# Contains 80 materials
+# Contains 85 materials
 
 newmtl grass_block_top
 Ns 0
@@ -103,6 +103,20 @@ map_Ka tex/MWO_chest_side.png
 # for G3D, to make textures look blocky:
 interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
 map_Kd tex/MWO_chest_side.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl short_grass
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka tex/short_grass_y.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd tex/short_grass_y.png
+map_d tex/short_grass_y.png
 illum 2
 # d 1
 # Tr 0
@@ -517,6 +531,34 @@ illum 2
 # d 1
 # Tr 0
 
+newmtl tall_grass_bottom
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka tex/tall_grass_bottom_y.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd tex/tall_grass_bottom_y.png
+map_d tex/tall_grass_bottom_y.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl tall_grass_top
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka tex/tall_grass_top_y.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd tex/tall_grass_top_y.png
+map_d tex/tall_grass_top_y.png
+illum 2
+# d 1
+# Tr 0
+
 newmtl rose_bush_bottom
 Ns 0
 Ka 0.2 0.2 0.2
@@ -698,6 +740,34 @@ map_Ka tex/dark_oak_planks.png
 # for G3D, to make textures look blocky:
 interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
 map_Kd tex/dark_oak_planks.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl spruce_door_bottom
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka tex/spruce_door_bottom.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd tex/spruce_door_bottom.png
+map_d tex/spruce_door_bottom.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl spruce_door_top
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka tex/spruce_door_top.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd tex/spruce_door_top.png
+map_d tex/spruce_door_top.png
 illum 2
 # d 1
 # Tr 0
