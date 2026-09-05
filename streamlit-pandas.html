@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>streamlit-pandas — 林子茵 Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Project layout ── */
+    .project-section {
+      margin-bottom: 56px;
+    }
+
+    .project-section h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      border-left: 3px solid var(--primary);
+      padding-left: 12px;
+      margin-bottom: 18px;
+    }
+
+    .project-section p,
+    .project-section li {
+      color: var(--text-muted);
+      line-height: 1.9;
+      font-size: 1.05rem;
+    }
+
+    .project-section ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .project-section ul li::before {
+      content: '・';
+      color: var(--primary);
+      font-size: 1.3rem;
+      vertical-align: middle;
+      margin-right: 2px;
+    }
+
+    /* ── Two-col layout ── */
+    .project-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    /* ── Result cards ── */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .result-card .result-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .result-card .result-label {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    /* ── Tech chips ── */
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tooltip-chip {
+      position: relative;
+      cursor: default;
+    }
+
+    .tooltip-chip::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .tooltip-chip::before {
+      content: '';
+      position: absolute;
+      top: calc(100% + 3px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-bottom-color: var(--border);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .tooltip-chip:hover::after,
+    .tooltip-chip:hover::before {
+      opacity: 1;
+    }
+
+    /* ── Section hint ── */
+    .section-hint {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      opacity: 0.65;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    /* ── Buttons ── */
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    /* ── Demo iframe ── */
+    .demo-frame-wrap {
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .demo-frame-wrap iframe {
+      width: 100%;
+      height: 700px;
+      border: none;
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .project-cols {
+        grid-template-columns: 1fr;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">目錄</a>
+      <ul class="nav-links">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="presentation.html">簡報製作</a></li>
+        <li class="nav-dropdown">
+          <div class="nav-dropdown-toggle">
+            <a href="bots.html">程式專案</a>
+            <span class="dropdown-arrow">▾</span>
+          </div>
+          <ul class="nav-sub">
+            <li><a href="linebot.html">linebot</a></li>
+            <li><a href="streamlit-pandas.html">streamlit-pandas</a></li>
+            <li><a href="streamlit-sql.html">MySQL資料分析</a></li>
+          </ul>
+        </li>
+        <li><a href="design.html">遊戲建築設計</a></li>
+      </ul>
+      <div class="nav-toggle" aria-label="選單">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <h1>streamlit-pandas</h1>
+    <p>企業數據分析儀表板</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- 簡介 -->
+      <div class="project-section">
+        <h2>專案簡介</h2>
+        <p>最初在課堂上製作pandas應用的side project，透過與streamlit建立互動介面，能更直觀的獲取資訊。</p>
+      </div>
+
+      <!-- 數字成果 -->
+      <div class="project-section">
+        <h2>專案規模</h2>
+        <div class="result-grid">
+          <div class="result-card">
+            <div class="result-num">2</div>
+            <div class="result-label">套資料來源<br>A 企業 ＆ B 公司</div>
+          </div>
+          <div class="result-card">
+            <div class="result-num">5</div>
+            <div class="result-label">大分析維度<br>時間 人員 產品 客戶 交叉</div>
+          </div>
+          <div class="result-card">
+            <div class="result-num">14</div>
+            <div class="result-label">項分析功能<br>含樞紐、統計、排名等</div>
+          </div>
+          <div class="result-card">
+            <div class="result-num">互動</div>
+            <div class="result-label">即時篩選<br>selectbox 動態切換</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 技術 -->
+      <div class="project-section">
+        <h2>使用技術<span class="section-hint">滑鼠懸停可查看細節</span></h2>
+        <div class="tech-list">
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip tooltip-chip" data-tip="互動式 Web App 框架">Streamlit</span>
+          <span class="skill-chip tooltip-chip" data-tip="資料整理與分析">Pandas</span>
+          <span class="skill-chip tooltip-chip" data-tip="圖表視覺化">Matplotlib</span>
+          <span class="skill-chip tooltip-chip" data-tip="雲端部署">Streamlit Cloud</span>
+          <span class="skill-chip">Google Colab</span>
+          <span class="skill-chip tooltip-chip" data-tip="AI輔助開發streamlit頁面">Claude</span>
+        </div>
+      </div>
+
+      <!-- Demo -->
+      <div class="project-section">
+        <h2>線上 Demo</h2>
+        <div class="btn-row">
+          <a href="https://github.com/OliveLin/port-streamlit-pandas" target="_blank" class="btn btn-outline">GitHub</a>
+          <a href="https://colab.research.google.com/drive/1g29pa1_aO1i0vO-z5g-N4ssquccVBl9x?usp=sharing"
+            target="_blank" class="btn btn-outline">Colab</a>
+          <a href="https://port-app-pandas-dub8etfcu3azuyk6cfrqln.streamlit.app/" target="_blank"
+            class="btn btn-primary">開啟完整頁面</a>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-muted);opacity:0.7;margin-bottom:12px;">
+          免費版 Streamlit 閒置後會休眠，若顯示「Zzzz」請點擊喚醒，喚醒約需 1–2 分鐘，或點上方「開啟完整頁面」直接進入。
+        </p>
+        <div class="demo-frame-wrap">
+          <iframe src="https://port-app-pandas-dub8etfcu3azuyk6cfrqln.streamlit.app/?embed=true" allow="fullscreen"
+            title="企業數據分析 Streamlit App">
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/OliveLin" target="_blank">GitHub</a></li>
+    </ul>
+    <p>© 2026 林子茵</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

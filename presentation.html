@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>簡報製作 — 林子茵 Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">目錄</a>
+      <ul class="nav-links">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="presentation.html">簡報製作</a></li>
+        <li class="nav-dropdown">
+          <div class="nav-dropdown-toggle">
+            <a href="bots.html">程式專案</a>
+            <span class="dropdown-arrow">▾</span>
+          </div>
+          <ul class="nav-sub">
+            <li><a href="linebot.html">linebot</a></li>
+            <li><a href="streamlit-pandas.html">streamlit-pandas</a></li>
+            <li><a href="streamlit-sql.html">MySQL資料分析</a></li>
+          </ul>
+        </li>
+        <li><a href="design.html">遊戲建築設計</a></li>
+      </ul>
+      <div class="nav-toggle" aria-label="選單">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <h1>簡報作品集</h1>
+    <p>滑鼠滑過時可以暫停，按左右鍵切換內容</p>
+  </div>
+
+  <!-- Slideshows -->
+  <section class="section">
+    <div class="container">
+
+      <div class="slideshows-grid">
+
+        <div class="slideshow-card" data-images='["assets/images/ppt1/1.jpg","assets/images/ppt1/2.jpg","assets/images/ppt1/3.jpg","assets/images/ppt1/4.jpg","assets/images/ppt1/5.jpg","assets/images/ppt1/6.jpg","assets/images/ppt1/7.jpg"]'>
+          <div class="slideshow-header">
+            <h3>繞一圈台灣</h3>
+            <p class="slideshow-desc">環島趣事雜事合集</p>
+          </div>
+          <div class="slideshow-viewer">
+            <div class="carousel-track"></div>
+            <div class="carousel-controls">
+              <button class="slide-btn prev-btn">&#8592;</button>
+              <div class="carousel-dots"></div>
+              <button class="slide-btn next-btn">&#8594;</button>
+            </div>
+            <div class="slide-page-num">1 / 1</div>
+          </div>
+        </div>
+
+        <hr class="ppt-divider">
+
+        <div class="slideshow-card" data-images='["assets/images/ppt2/1.jpg","assets/images/ppt2/2.jpg","assets/images/ppt2/3.jpg","assets/images/ppt2/4.jpg","assets/images/ppt2/5.jpg","assets/images/ppt2/6.jpg","assets/images/ppt2/7.jpg","assets/images/ppt2/8.jpg","assets/images/ppt2/9.jpg","assets/images/ppt2/10.jpg","assets/images/ppt2/11.jpg","assets/images/ppt2/12.jpg","assets/images/ppt2/13.jpg","assets/images/ppt2/14.jpg","assets/images/ppt2/15.jpg","assets/images/ppt2/16.jpg","assets/images/ppt2/17.jpg","assets/images/ppt2/18.jpg","assets/images/ppt2/19.jpg","assets/images/ppt2/20.jpg","assets/images/ppt2/21.jpg","assets/images/ppt2/22.jpg","assets/images/ppt2/23.jpg","assets/images/ppt2/24.jpg","assets/images/ppt2/25.jpg","assets/images/ppt2/26.jpg","assets/images/ppt2/27.jpg","assets/images/ppt2/28.jpg"]'>
+          <div class="slideshow-header">
+            <h3>一米食，千文化</h3>
+            <p class="slideshow-desc"><span class="desc-center">於創新與創業製作</span>・負責內容為現有服務與技術研究<br>・負責簡報設計與排版（27／28頁）<br>・確保視覺風格的一致性</p>
+          </div>
+          <div class="slideshow-viewer">
+            <div class="carousel-track"></div>
+            <div class="carousel-controls">
+              <button class="slide-btn prev-btn">&#8592;</button>
+              <div class="carousel-dots"></div>
+              <button class="slide-btn next-btn">&#8594;</button>
+            </div>
+            <div class="slide-page-num">1 / 1</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+    </ul>
+    <p>© 2026 林子茵</p>
+  </footer>
+
+  <script src="js/slideshow.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>林子茵 — Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">目錄</a>
+      <ul class="nav-links">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="presentation.html">簡報製作</a></li>
+        <li class="nav-dropdown">
+          <div class="nav-dropdown-toggle">
+            <a href="bots.html">程式專案</a>
+            <span class="dropdown-arrow">▾</span>
+          </div>
+          <ul class="nav-sub">
+            <li><a href="linebot.html">linebot</a></li>
+            <li><a href="streamlit-pandas.html">streamlit-pandas</a></li>
+            <li><a href="streamlit-sql.html">MySQL資料分析</a></li>
+          </ul>
+        </li>
+        <li><a href="design.html">遊戲建築設計</a></li>
+      </ul>
+      <div class="nav-toggle" aria-label="選單">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-badge">Portfolio</span>
+      <h1><span style="font-size:0.55em;font-weight:500;color:#3d7a57;">林子茵的</span><strong
+          style="color:#3d7a57;">作品集</strong></h1>
+      <p>這裡放了我所做過的東西<br>有課堂上的，也有私底下的</p>
+    </div>
+    <div class="hero-scroll-hint">下滑看網頁簡介 ↓</div>
+  </section>
+
+  <!-- About -->
+  <section class="about-strip">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>關於我</h2>
+        <p>
+          我是林子茵，喜歡玩遊戲，這裡放了過去我學到的東西及遊戲裡的成果，所以有你能看到的東西，不論是建築、簡報或是程式碼很多都是我自己用出來的，有使用AI工具我一定會註明
+        </p>
+        <h2>關於網站</h2>
+        <p>
+          這個網站是使用claude code輔助開發，加上我以前學過網頁設計，大大減少了製作時間。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Works Preview -->
+  <section class="works-preview">
+    <h2 class="section-title">作品分類</h2>
+    <p class="section-sub">點擊分類查看詳細作品</p>
+    <div class="works-preview-grid works-preview-grid--3">
+      <a href="presentation.html" class="preview-card">
+        <h3>簡報製作</h3>
+        <p>各類主題的簡報設計作品，包含版面規劃、視覺風格與內容呈現。</p>
+        <span class="btn btn-outline" style="align-self: flex-start;">查看作品 →</span>
+      </a>
+      <a href="linebot.html" class="preview-card">
+        <h3>程式專案</h3>
+        <p>自行開發的程式作品，涵蓋 Line Bot、Streamlit 資料應用等實用工具。</p>
+        <span class="btn btn-outline" style="align-self: flex-start;">查看作品 →</span>
+      </a>
+      <a href="design.html" class="preview-card">
+        <h3>遊戲建築設計</h3>
+        <p>在遊戲世界中建造的建築與場景設計，包含風格規劃與實際建造成果。</p>
+        <span class="btn btn-outline" style="align-self: flex-start;">查看作品 →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+    </ul>
+    <p>© 2026 林子茵</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

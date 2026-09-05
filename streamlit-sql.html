@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MySQL 資料分析 — 林子茵 Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .project-section {
+      margin-bottom: 64px;
+    }
+
+    .project-section>h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      border-left: 3px solid var(--primary);
+      padding-left: 12px;
+      margin-bottom: 24px;
+    }
+
+    .project-section p {
+      color: var(--text-muted);
+      line-height: 1.9;
+      font-size: 1.05rem;
+    }
+
+    /* ── Query block ── */
+    .query-block {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .query-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .query-code {
+      background: #1a1a2e;
+      padding: 24px 28px;
+      overflow-x: auto;
+    }
+
+    .query-code .query-label {
+      color: #6c7086;
+    }
+
+    .query-code pre {
+      margin: 0;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.84rem;
+      line-height: 1.75;
+      color: #cdd6f4;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .sql-kw {
+      color: #89b4fa;
+      font-weight: 600;
+    }
+
+    .sql-fn {
+      color: #a6e3a1;
+    }
+
+    .sql-bt {
+      color: #f38ba8;
+    }
+
+    .sql-str {
+      color: #f9e2af;
+    }
+
+    .sql-cm {
+      color: #585b70;
+      font-style: italic;
+    }
+
+    /* ── Query tags ── */
+    .query-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .qtag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: rgba(137, 180, 250, 0.15);
+      color: #89b4fa;
+      border: 1px solid rgba(137, 180, 250, 0.3);
+    }
+
+    .query-result {
+      background: var(--surface);
+      padding: 24px 28px;
+      border-left: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .query-result .query-label {
+      color: var(--text-muted);
+    }
+
+    .query-result table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .query-result th {
+      text-align: left;
+      color: var(--primary);
+      font-weight: 700;
+      padding: 6px 10px 10px 0;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .query-result td {
+      padding: 7px 10px 7px 0;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .query-result tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--primary-dim);
+      color: var(--primary);
+    }
+
+    .badge-muted {
+      background: #f0f0f0;
+      color: #888;
+    }
+
+    /* ── Section hint ── */
+    .section-hint {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      opacity: 0.65;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    /* ── Tech chips ── */
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tooltip-chip {
+      position: relative;
+      cursor: default;
+    }
+
+    .tooltip-chip::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .tooltip-chip::before {
+      content: '';
+      position: absolute;
+      top: calc(100% + 3px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-bottom-color: var(--border);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .tooltip-chip:hover::after,
+    .tooltip-chip:hover::before {
+      opacity: 1;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 860px) {
+      .query-block {
+        grid-template-columns: 1fr;
+      }
+
+      .query-result {
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">目錄</a>
+      <ul class="nav-links">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="presentation.html">簡報製作</a></li>
+        <li class="nav-dropdown">
+          <div class="nav-dropdown-toggle">
+            <a href="bots.html">程式專案</a>
+            <span class="dropdown-arrow">▾</span>
+          </div>
+          <ul class="nav-sub">
+            <li><a href="linebot.html">linebot</a></li>
+            <li><a href="streamlit-pandas.html">streamlit-pandas</a></li>
+            <li><a href="streamlit-sql.html">MySQL資料分析</a></li>
+          </ul>
+        </li>
+        <li><a href="design.html">遊戲建築設計</a></li>
+      </ul>
+      <div class="nav-toggle" aria-label="選單">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <h1>MySQL資料分析</h1>
+    <p>以SQL查詢企業資料庫</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- 簡介 -->
+      <div class="project-section">
+        <h2>專案簡介</h2>
+        <p>在課堂上所學習的SQL應用，資料與pandas應用的companyA一樣，透過關鍵字tag快速理解使用功能。</p>
+      </div>
+
+      <!-- 查詢展示 -->
+      <div class="project-section">
+        <h2>查詢展示<span class="section-hint">節錄 4 題代表性查詢</span></h2>
+
+        <!-- Q1 NOT EXISTS -->
+        <div class="query-block">
+          <div class="query-code">
+            <div class="query-label">Q1 — 未曾下單的潛在客戶</div>
+            <div class="query-tags">
+              <span class="qtag">NOT EXISTS</span>
+              <span class="qtag">相關子查詢</span>
+            </div>
+            <pre><span class="sql-kw">SELECT</span> CustomerID, CompanyName, ContactName
+<span class="sql-kw">FROM</span> customers
+<span class="sql-kw">WHERE NOT EXISTS</span> (
+  <span class="sql-kw">SELECT</span> * <span class="sql-kw">FROM</span> orders
+  <span class="sql-kw">WHERE</span> customers.CustomerID = orders.CustomerID
+);</pre>
+          </div>
+          <div class="query-result">
+            <div class="query-label">結果（共 2 筆）</div>
+            <table>
+              <tr>
+                <th>CustomerID</th>
+                <th>CompanyName</th>
+              </tr>
+              <tr>
+                <td>FISSA</td>
+                <td>FISSA Fabrica Inter...</td>
+              </tr>
+              <tr>
+                <td>PARIS</td>
+                <td>Paris spécialités</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Q3 RANK() OVER -->
+        <div class="query-block">
+          <div class="query-code">
+            <div class="query-label">Q3 — 員工銷售排名（窗口函數）</div>
+            <div class="query-tags">
+              <span class="qtag">RANK() OVER</span>
+              <span class="qtag">窗口函數</span>
+              <span class="qtag">多表 JOIN</span>
+            </div>
+            <pre><span class="sql-kw">SELECT</span>
+  orders.EmployeeID,
+  employees.FirstName, employees.LastName,
+  <span class="sql-fn">RANK() OVER</span> (
+    <span class="sql-kw">ORDER BY</span> <span class="sql-fn">SUM</span>(<span class="sql-bt">`order details`</span>.UnitPrice
+             * <span class="sql-bt">`order details`</span>.Quantity) <span class="sql-kw">DESC</span>
+  ) 銷售排名
+<span class="sql-kw">FROM</span> orders
+  <span class="sql-kw">JOIN</span> <span class="sql-bt">`order details`</span> <span class="sql-kw">ON</span> orders.OrderID = <span class="sql-bt">`order details`</span>.OrderID
+  <span class="sql-kw">JOIN</span> employees <span class="sql-kw">ON</span> employees.EmployeeID = orders.EmployeeID
+<span class="sql-kw">GROUP BY</span> orders.EmployeeID;</pre>
+          </div>
+          <div class="query-result">
+            <div class="query-label">結果（共 9 筆）</div>
+            <table>
+              <tr>
+                <th>排名</th>
+                <th>姓名</th>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Margaret Peacock</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Janet Leverling</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Nancy Davolio</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Andrew Fuller</td>
+              </tr>
+              <tr>
+                <td style="color:#bbb">5–9</td>
+                <td style="color:#bbb">…</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Q12 HAVING + 子查詢 -->
+        <div class="query-block">
+          <div class="query-code">
+            <div class="query-label">Q12 — 低於平均銷售額的員工</div>
+            <div class="query-tags">
+              <span class="qtag">HAVING</span>
+              <span class="qtag">巢狀子查詢</span>
+              <span class="qtag">GROUP BY</span>
+            </div>
+            <pre><span class="sql-kw">SELECT</span>
+  orders.EmployeeID,
+  employees.FirstName, employees.LastName,
+  <span class="sql-fn">SUM</span>(UnitPrice * Quantity) 銷售總額
+<span class="sql-kw">FROM</span> orders
+  <span class="sql-kw">JOIN</span> <span class="sql-bt">`order details`</span> <span class="sql-kw">ON</span> orders.OrderID = <span class="sql-bt">`order details`</span>.OrderID
+  <span class="sql-kw">JOIN</span> employees <span class="sql-kw">ON</span> employees.EmployeeID = orders.EmployeeID
+<span class="sql-kw">GROUP BY</span> employees.EmployeeID
+<span class="sql-kw">HAVING</span> <span class="sql-fn">SUM</span>(UnitPrice * Quantity) &lt; (
+  <span class="sql-kw">SELECT</span> <span class="sql-fn">SUM</span>(UnitPrice * Quantity)
+         / (<span class="sql-kw">SELECT</span> <span class="sql-fn">COUNT</span>(EmployeeID) <span class="sql-kw">FROM</span> employees)
+  <span class="sql-kw">FROM</span> <span class="sql-bt">`order details`</span>
+);</pre>
+          </div>
+          <div class="query-result">
+            <div class="query-label">結果（共 5 筆）</div>
+            <table>
+              <tr>
+                <th>姓名</th>
+                <th>銷售總額</th>
+              </tr>
+              <tr>
+                <td>Steven Buchanan</td>
+                <td>75,567</td>
+              </tr>
+              <tr>
+                <td>Michael Suyama</td>
+                <td>78,198</td>
+              </tr>
+              <tr>
+                <td>Anne Dodsworth</td>
+                <td>82,964</td>
+              </tr>
+              <tr>
+                <td>Laura Callahan</td>
+                <td>133,301</td>
+              </tr>
+              <tr>
+                <td>Robert King</td>
+                <td>141,295</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Q2 IF 條件分級 -->
+        <div class="query-block">
+          <div class="query-code">
+            <div class="query-label">Q2 — 產品銷量分級（條件判斷）</div>
+            <div class="query-tags">
+              <span class="qtag">IF()</span>
+              <span class="qtag">條件判斷</span>
+              <span class="qtag">GROUP BY</span>
+            </div>
+            <pre><span class="sql-kw">SELECT</span>
+  products.ProductID, products.ProductName,
+  <span class="sql-fn">IF</span>(<span class="sql-fn">COUNT</span>(<span class="sql-bt">`order details`</span>.ProductID) &gt; 20,
+    <span class="sql-str">'銷量好'</span>,
+    <span class="sql-fn">IF</span>(<span class="sql-fn">COUNT</span>(<span class="sql-bt">`order details`</span>.ProductID) &lt; 10,
+       <span class="sql-str">'銷量差'</span>, <span class="sql-str">'銷量普通'</span>)
+  ) 產品銷量等級
+<span class="sql-kw">FROM</span> <span class="sql-bt">`order details`</span>, products
+<span class="sql-kw">WHERE</span> products.ProductID = <span class="sql-bt">`order details`</span>.ProductID
+<span class="sql-kw">GROUP BY</span> products.ProductID;</pre>
+          </div>
+          <div class="query-result">
+            <div class="query-label">結果（共 77 筆）</div>
+            <table>
+              <tr>
+                <th>產品名稱</th>
+                <th>等級</th>
+              </tr>
+              <tr>
+                <td>Chai</td>
+                <td><span class="badge">銷量好</span></td>
+              </tr>
+              <tr>
+                <td>Chang</td>
+                <td><span class="badge">銷量好</span></td>
+              </tr>
+              <tr>
+                <td>Aniseed Syrup</td>
+                <td><span class="badge badge-muted">銷量普通</span></td>
+              </tr>
+              <tr>
+                <td style="color:#bbb">…</td>
+                <td style="color:#bbb">…</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 使用技術 -->
+      <div class="project-section">
+        <h2>使用技術</h2>
+        <div class="tech-list">
+          <span class="skill-chip">MySQL</span>
+          <span class="skill-chip">SQL</span>
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip">Google Colab</span>
+        </div>
+      </div>
+
+      <div class="project-section">
+        <h2>原始檔案</h2>
+        <div class="btn-row">
+          <a href="https://colab.research.google.com/drive/1ELYkf4GwCYveMYNSoBEKY7rKSNrS6TRf?usp=sharing"
+            target="_blank" class="btn btn-outline">Colab</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/OliveLin" target="_blank">GitHub</a></li>
+    </ul>
+    <p>© 2026 林子茵</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

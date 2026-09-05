@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>遊戲建築設計 — 林子茵 Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .project-section { margin-bottom: 56px; }
+    .project-section h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      border-left: 3px solid var(--primary);
+      padding-left: 12px;
+      margin-bottom: 18px;
+    }
+    .project-section p {
+      color: var(--text-muted);
+      line-height: 1.9;
+      font-size: 1.05rem;
+    }
+
+    /* ── 3D Viewer ── */
+    .viewer-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      min-height: 320px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      background: #111;
+    }
+    .viewer-wrap canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .viewer-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: #ccc;
+      font-size: 0.88rem;
+      background: #111;
+      z-index: 10;
+      transition: opacity 0.4s;
+    }
+    .viewer-loading.hidden { opacity: 0; pointer-events: none; }
+    .spin {
+      width: 34px; height: 34px;
+      border: 3px solid rgba(255,255,255,0.12);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .viewer-hint {
+      position: absolute;
+      bottom: 12px;
+      right: 14px;
+      font-size: 0.74rem;
+      color: rgba(255,255,255,0.35);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Build meta tags ── */
+    .build-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    /* ── Tech chips ── */
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .tooltip-chip {
+      position: relative;
+      cursor: default;
+    }
+    .tooltip-chip::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .tooltip-chip::before {
+      content: '';
+      position: absolute;
+      top: calc(100% + 3px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-bottom-color: var(--border);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .tooltip-chip:hover::after,
+    .tooltip-chip:hover::before { opacity: 1; }
+    .section-hint {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      opacity: 0.65;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">目錄</a>
+      <ul class="nav-links">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="presentation.html">簡報製作</a></li>
+        <li class="nav-dropdown">
+          <div class="nav-dropdown-toggle">
+            <a href="bots.html">程式專案</a>
+            <span class="dropdown-arrow">▾</span>
+          </div>
+          <ul class="nav-sub">
+            <li><a href="linebot.html">linebot</a></li>
+            <li><a href="streamlit-pandas.html">streamlit-pandas</a></li>
+            <li><a href="streamlit-sql.html">MySQL資料分析</a></li>
+          </ul>
+        </li>
+        <li><a href="design.html">遊戲建築設計</a></li>
+      </ul>
+      <div class="nav-toggle" aria-label="選單">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <h1>🏛️ 遊戲建築設計</h1>
+    <p>在 Minecraft 中打造的建築與空間，可互動 360° 瀏覽</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Build 1 -->
+      <div class="project-section">
+        <div class="build-meta">
+          <span class="skill-chip">Minecraft Java Edition</span>
+          <span class="skill-chip">小屋</span>
+        </div>
+        <h2>小屋</h2>
+        <div class="viewer-wrap" id="viewer1">
+          <div class="viewer-loading" id="loading1">
+            <div class="spin"></div>
+            <span>載入模型中…</span>
+          </div>
+          <div class="viewer-hint">拖曳旋轉 &nbsp;·&nbsp; 滾輪縮放 &nbsp;·&nbsp; 右鍵平移</div>
+        </div>
+      </div>
+
+      <!-- 使用工具 -->
+      <div class="project-section">
+        <h2>使用工具<span class="section-hint">滑鼠懸停可查看細節</span></h2>
+        <div class="tech-list">
+          <span class="skill-chip">Minecraft Java Edition</span>
+          <span class="skill-chip tooltip-chip" data-tip="將遊戲世界匯出為 OBJ 格式">Mineways</span>
+          <span class="skill-chip tooltip-chip" data-tip="網頁互動式 3D 渲染">Three.js</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+    </ul>
+    <p>© 2026 林子茵</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <!-- Three.js 3D Viewer -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OBJLoader }     from 'three/addons/loaders/OBJLoader.js';
+    import { MTLLoader }     from 'three/addons/loaders/MTLLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    initViewer(
+      document.getElementById('viewer1'),
+      document.getElementById('loading1'),
+      'assets/models/',
+      '1.mtl',
+      'house1.obj'
+    );
+
+    function initViewer(wrap, loadingEl, basePath, mtlFile, objFile) {
+      // Renderer
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      wrap.appendChild(renderer.domElement);
+
+      // Scene
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x141414);
+
+      // Camera
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 5000);
+
+      // Lights
+      scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+      const sun = new THREE.DirectionalLight(0xfff5e0, 1.4);
+      sun.position.set(1, 1.5, 1);
+      scene.add(sun);
+      const fill = new THREE.DirectionalLight(0xc8d8ff, 0.5);
+      fill.position.set(-1, 0.5, -1);
+      scene.add(fill);
+
+      // Controls
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping  = true;
+      controls.dampingFactor  = 0.07;
+      controls.autoRotate     = true;
+      controls.autoRotateSpeed = 0.7;
+      controls.addEventListener('start', () => { controls.autoRotate = false; });
+
+      // Resize observer — keeps canvas matched to wrapper
+      function resize() {
+        const w = wrap.clientWidth;
+        const h = wrap.clientHeight;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+      new ResizeObserver(resize).observe(wrap);
+      resize();
+
+      function showError(msg) {
+        loadingEl.innerHTML = `<span style="color:#f87171;font-size:0.85rem;">⚠ ${msg}</span>`;
+      }
+
+      // Load MTL then OBJ
+      const mtlLoader = new MTLLoader();
+      mtlLoader.setPath(basePath);
+      mtlLoader.load(mtlFile, (materials) => {
+        materials.preload();
+        loadingEl.querySelector('span').textContent = '載入模型中…';
+        const objLoader = new OBJLoader();
+        objLoader.setMaterials(materials);
+        objLoader.setPath(basePath);
+        objLoader.load(
+          objFile,
+          (obj) => {
+            const box    = new THREE.Box3().setFromObject(obj);
+            const center = box.getCenter(new THREE.Vector3());
+            const size   = box.getSize(new THREE.Vector3());
+            obj.position.sub(center);
+            scene.add(obj);
+
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const dist   = maxDim * 1.6;
+            camera.position.set(dist * 0.85, maxDim * 0.55, dist);
+            controls.minDistance = maxDim * 0.15;
+            controls.maxDistance = maxDim * 6;
+            controls.update();
+
+            loadingEl.classList.add('hidden');
+            setTimeout(() => { loadingEl.style.display = 'none'; }, 420);
+          },
+          null,
+          () => showError('OBJ 載入失敗，請確認檔案路徑')
+        );
+      }, null, () => showError('MTL 載入失敗，請確認檔案路徑'));
+
+      // Render loop
+      (function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      })();
+    }
+  </script>
+</body>
+</html>

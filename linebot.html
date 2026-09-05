@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LINE Bot — 林子茵 Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Project layout ── */
+    .project-section { margin-bottom: 56px; }
+    .project-section h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      border-left: 3px solid var(--primary);
+      padding-left: 12px;
+      margin-bottom: 18px;
+    }
+    .project-section p,
+    .project-section li {
+      color: var(--text-muted);
+      line-height: 1.9;
+      font-size: 1.05rem;
+    }
+    .project-section ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .project-section ul li::before {
+      content: '・';
+      color: var(--primary);
+      font-size: 1.3rem;
+      vertical-align: middle;
+      margin-right: 2px;
+    }
+
+    /* ── Result + Screenshot combined ── */
+    .result-screenshot-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 48px;
+      align-items: center;
+      max-width: 100%;
+    }
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .result-card .result-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+    .result-card .result-label {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    /* ── Screenshots ── */
+    .screenshots {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .screenshots::-webkit-scrollbar { height: 4px; }
+    .screenshots::-webkit-scrollbar-track { background: transparent; }
+    .screenshots::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .screenshot-item {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .screenshot-item .img-crop {
+      width: 185px;
+      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    }
+    .screenshot-item img {
+      width: 185px;
+      display: block;
+      margin-bottom: -28px;
+    }
+    .screenshot-item span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .screenshot-item .screenshot-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      opacity: 0.7;
+      margin-top: -4px;
+      text-align: center;
+    }
+
+    /* ── Tech chips ── */
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* ── Tooltip chip ── */
+    .tooltip-chip {
+      position: relative;
+      cursor: default;
+    }
+    .tooltip-chip::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .tooltip-chip::before {
+      content: '';
+      position: absolute;
+      top: calc(100% + 3px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-bottom-color: var(--border);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .tooltip-chip:hover::after,
+    .tooltip-chip:hover::before { opacity: 1; }
+
+    /* ── Two-col layout ── */
+    .project-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    /* ── Section hint ── */
+    .section-hint {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      opacity: 0.65;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 900px) {
+      .project-cols { grid-template-columns: 1fr; }
+      .result-grid  { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .result-screenshot-wrap { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">目錄</a>
+      <ul class="nav-links">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="presentation.html">簡報製作</a></li>
+        <li class="nav-dropdown">
+          <div class="nav-dropdown-toggle">
+            <a href="bots.html">程式專案</a>
+            <span class="dropdown-arrow">▾</span>
+          </div>
+          <ul class="nav-sub">
+            <li><a href="linebot.html">linebot</a></li>
+            <li><a href="streamlit-pandas.html">streamlit-pandas</a></li>
+            <li><a href="streamlit-sql.html">MySQL資料分析</a></li>
+          </ul>
+        </li>
+        <li><a href="design.html">遊戲建築設計</a></li>
+      </ul>
+      <div class="nav-toggle" aria-label="選單">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <h1>LINE Bot</h1>
+    <p>行政流程改善工具</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- 背景與問題 / 解決方案 -->
+      <div class="project-cols project-section">
+        <div>
+          <h2>背景與問題</h2>
+          <ul>
+            <li>實驗室行政工作依賴 Google 表單和 Excel</li>
+            <li>資料需根據不同類別分類和管理</li>
+            <li>每次填寫 Google 表單需要 30s–1min</li>
+            <li>查看資料時需切換到 Excel</li>
+          </ul>
+        </div>
+        <div>
+          <h2>解決方案</h2>
+          <ul>
+            <li>開發 LINE Bot 整合表單填寫與資料查詢</li>
+            <li>使用者在 LINE 直接輸入資訊，自動同步到 Excel</li>
+            <li>新增查詢及餘額查詢功能，單一介面查看所有資料</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 成果 + 截圖 -->
+      <div class="project-section">
+        <h2>成果</h2>
+        <div class="result-screenshot-wrap">
+          <div class="result-grid">
+            <div class="result-card">
+              <div class="result-num">20s</div>
+              <div class="result-label">作業時間<br>（原 30s–1min）</div>
+            </div>
+            <div class="result-card">
+              <div class="result-num">統一</div>
+              <div class="result-label">介面整合<br>不再切換表單與 Excel</div>
+            </div>
+            <div class="result-card">
+              <div class="result-num">自動</div>
+              <div class="result-label">智能分類<br>根據內容自動歸類</div>
+            </div>
+            <div class="result-card">
+              <div class="result-num">即時</div>
+              <div class="result-label">資料查詢<br>變更立即反映</div>
+            </div>
+          </div>
+          <div class="screenshots">
+            <div class="screenshot-item">
+              <div class="img-crop"><img src="assets/images/linebot-ex/11.png" alt="新增記錄" /></div>
+              <span>新增記錄</span>
+              <span class="screenshot-sub">複製後將資料輸入即可</span>
+            </div>
+            <div class="screenshot-item">
+              <div class="img-crop"><img src="assets/images/linebot-ex/21.png" alt="查詢記錄" /></div>
+              <span>查詢記錄</span>
+              <span class="screenshot-sub">能查詢最近3筆輸入</span>
+            </div>
+            <div class="screenshot-item">
+              <div class="img-crop"><img src="assets/images/linebot-ex/31.png" alt="餘額查詢" /></div>
+              <span>餘額查詢</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 技術 -->
+      <div class="project-section">
+        <h2>使用技術<span class="section-hint">滑鼠懸停可查看細節</span></h2>
+        <div class="tech-list">
+          <span class="skill-chip">LINE Messaging API</span>
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip tooltip-chip" data-tip="雲端部署">Render</span>
+          <span class="skill-chip tooltip-chip" data-tip="定時自動化任務">Cron Job</span>
+          <span class="skill-chip tooltip-chip" data-tip="AI 輔助開發">Claude</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+    </ul>
+    <p>© 2026 林子茵</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

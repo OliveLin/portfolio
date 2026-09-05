@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>程式專案 — 林子茵 Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">目錄</a>
+      <ul class="nav-links">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="presentation.html">簡報製作</a></li>
+        <li class="nav-dropdown">
+          <div class="nav-dropdown-toggle">
+            <a href="bots.html">程式專案</a>
+            <span class="dropdown-arrow">▾</span>
+          </div>
+          <ul class="nav-sub">
+            <li><a href="linebot.html">linebot</a></li>
+            <li><a href="streamlit-pandas.html">streamlit-pandas</a></li>
+            <li><a href="streamlit-sql.html">MySQL資料分析</a></li>
+          </ul>
+        </li>
+        <li><a href="design.html">遊戲建築設計</a></li>
+      </ul>
+      <div class="nav-toggle" aria-label="選單">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <h1>程式專案</h1>
+    <p>所有關於程式語言的作品及應用</p>
+  </div>
+
+  <!-- Intro -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container">
+      <h2 class="section-title">關於這些專案</h2>
+      <p style="color: var(--text-muted); max-width: 640px; line-height: 1.8; margin-bottom: 48px;">
+        這裡收錄了我獨立開發的程式作品。從 Line Bot 的訊息自動化，
+        到 Streamlit 搭配 Pandas 與 SQL 的資料應用，
+        每個專案都是從實際需求出發、邊學邊做的成果。
+      </p>
+
+      <!-- Tech stack -->
+      <div class="bots-tech">
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">LineBot</span>
+        <span class="skill-chip">3D model</span>
+        <span class="skill-chip">Pandas</span>
+        <span class="skill-chip">SQL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">專案列表</h2>
+      <p class="section-sub">點擊卡片查看詳細介紹</p>
+      <div class="cards-grid">
+
+        <a href="linebot.html" class="card bots-card">
+
+          <div class="card-body">
+            <span class="card-tag">Line Bot</span>
+            <h3 class="card-title">linebot</h3>
+            <p class="card-desc">
+              透過對話將資訊自動填入資料表，也可從聊天介面調出資料
+            </p>
+            <div class="card-links">
+              <span class="btn btn-primary">查看詳細 →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="streamlit-pandas.html" class="card bots-card">
+
+          <div class="card-body">
+            <span class="card-tag">Streamlit + Pandas</span>
+            <h3 class="card-title">streamlit-pandas</h3>
+            <p class="card-desc">
+              透過Streamlit建立互動介面，並使用Pandas進行資料讀取與整理，最後以表格及圖象回應
+            </p>
+            <div class="card-links">
+              <span class="btn btn-primary">查看詳細 →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="streamlit-sql.html" class="card bots-card">
+
+          <div class="card-body">
+            <span class="card-tag">Streamlit + SQL</span>
+            <h3 class="card-title">MySQL資料分析</h3>
+            <p class="card-desc">
+              透過幾個關鍵的功能，展示可應用的範圍
+            </p>
+            <div class="card-links">
+              <span class="btn btn-primary">查看詳細 →</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+    </ul>
+    <p>© 2026 林子茵</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
