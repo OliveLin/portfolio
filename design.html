@@ -291,7 +291,7 @@
         setTimeout(() => { loadingEl.style.display = 'none'; }, 420);
       },
       null,
-      () => showError('模型載入失敗，請確認檔案路徑')
+      (e) => showError('載入失敗: ' + (e && e.message ? e.message : JSON.stringify(e)))
     );
 
     // Render loop
