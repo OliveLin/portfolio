@@ -1,0 +1,8 @@
+*.glb binary
+*.obj binary
+*.mtl binary
+*.png binary
+*.jpg binary
+*.pdf binary
+*.xlsx binary
+*.csv text
