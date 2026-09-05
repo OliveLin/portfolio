@@ -1,5 +1,5 @@
 # Wavefront OBJ material file
-# Contains 85 materials
+# Contains 86 materials
 
 newmtl grass_block_top
 Ns 0
@@ -77,6 +77,19 @@ map_Ka tex/dandelion.png
 interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
 map_Kd tex/dandelion.png
 map_d tex/dandelion.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl bedrock
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka tex/bedrock.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd tex/bedrock.png
 illum 2
 # d 1
 # Tr 0
