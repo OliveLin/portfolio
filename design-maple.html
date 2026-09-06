@@ -23,7 +23,7 @@
       align-items: flex-start;
       margin-bottom: 72px;
     }
-    .build-row:nth-child(even) { flex-direction: row-reverse; }
+    .builds-list .build-row:nth-child(even) { flex-direction: row-reverse; }
 
     .build-viewer { flex: 0 0 56%; }
 
@@ -213,25 +213,68 @@
 
       <div class="back-link"><a href="design.html">← 返回建築總覽</a></div>
 
-      <!-- 建築 1：紅葉小屋 -->
-      <div class="build-row">
-        <div class="build-viewer">
-          <div class="viewer-wrap" id="viewer1">
-            <div class="viewer-loading" id="loading1">
-              <div class="spin"></div>
-              <span>載入模型中…</span>
+      <div class="builds-list">
+
+        <!-- 建築 1：紅葉小屋 -->
+        <div class="build-row">
+          <div class="build-viewer">
+            <div class="viewer-wrap" id="viewer1">
+              <div class="viewer-loading" id="loading1">
+                <div class="spin"></div><span>載入模型中…</span>
+              </div>
+              <div class="viewer-hint">拖曳旋轉 &nbsp;·&nbsp; 滾輪縮放 &nbsp;·&nbsp; 右鍵平移</div>
             </div>
-            <div class="viewer-hint">拖曳旋轉 &nbsp;·&nbsp; 滾輪縮放 &nbsp;·&nbsp; 右鍵平移</div>
+          </div>
+          <div class="build-info">
+            <div class="build-meta">
+              <span class="skill-chip">Minecraft Java Edition</span>
+              <span class="skill-chip">小屋</span>
+            </div>
+            <h2>紅葉小屋</h2>
+            <p>以楓葉為主題打造的小型木屋，整體以暖紅色調為主，搭配原木結構與石磚基底。</p>
           </div>
         </div>
-        <div class="build-info">
-          <div class="build-meta">
-            <span class="skill-chip">Minecraft Java Edition</span>
-            <span class="skill-chip">小屋</span>
+
+        <!-- 建築 2：楓葉農場 -->
+        <div class="build-row">
+          <div class="build-viewer">
+            <div class="viewer-wrap" id="viewer2">
+              <div class="viewer-loading" id="loading2">
+                <div class="spin"></div><span>載入模型中…</span>
+              </div>
+              <div class="viewer-hint">拖曳旋轉 &nbsp;·&nbsp; 滾輪縮放 &nbsp;·&nbsp; 右鍵平移</div>
+            </div>
           </div>
-          <h2>紅葉小屋</h2>
-          <p>以楓葉為主題打造的小型木屋，整體以暖紅色調為主，搭配原木結構與石磚基底。</p>
+          <div class="build-info">
+            <div class="build-meta">
+              <span class="skill-chip">Minecraft Java Edition</span>
+              <span class="skill-chip">農場</span>
+            </div>
+            <h2>楓葉農場</h2>
+            <p>楓葉主題的農場建築，以木柵欄圍成的田地搭配楓葉裝飾，整體呈現出秋日田園的氛圍。</p>
+          </div>
         </div>
+
+        <!-- 建築 3：楓葉塔 -->
+        <div class="build-row">
+          <div class="build-viewer">
+            <div class="viewer-wrap" id="viewer3">
+              <div class="viewer-loading" id="loading3">
+                <div class="spin"></div><span>載入模型中…</span>
+              </div>
+              <div class="viewer-hint">拖曳旋轉 &nbsp;·&nbsp; 滾輪縮放 &nbsp;·&nbsp; 右鍵平移</div>
+            </div>
+          </div>
+          <div class="build-info">
+            <div class="build-meta">
+              <span class="skill-chip">Minecraft Java Edition</span>
+              <span class="skill-chip">塔</span>
+            </div>
+            <h2>楓葉塔</h2>
+            <p>高聳的楓葉主題瞭望塔，以深色木材為主體，搭配楓葉裝飾與石磚底座，是整個楓葉村的地標建築。</p>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -344,6 +387,8 @@
     }
 
     createViewer('viewer1', 'loading1', 'maplehouse1');
+    createViewer('viewer2', 'loading2', 'maplefarm');
+    createViewer('viewer3', 'loading3', 'mapletower');
   </script>
 </body>
 </html>
