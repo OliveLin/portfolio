@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>大型建築 — 林子茵 Portfolio</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    .back-link { margin-bottom: 36px; }
+    .back-link {
+      margin-bottom: 36px;
+    }
+
     .back-link a {
       color: var(--text-muted);
       font-size: 0.9rem;
       text-decoration: none;
       transition: color 0.15s;
     }
-    .back-link a:hover { color: var(--primary); }
+
+    .back-link a:hover {
+      color: var(--primary);
+    }
 
     .build-row {
       display: flex;
@@ -21,22 +28,51 @@
       align-items: flex-start;
       margin-bottom: 72px;
     }
-    .build-row:nth-child(even) { flex-direction: row-reverse; }
-    .build-viewer { flex: 0 0 56%; }
-    .build-info { flex: 1; padding-top: 4px; }
-    .build-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+
+    .build-row:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .build-viewer {
+      flex: 0 0 56%;
+    }
+
+    .build-info {
+      flex: 1;
+      padding-top: 4px;
+    }
+
+    .build-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
     .build-info h2 {
       font-size: 1.35rem;
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 14px;
     }
-    .build-info p { color: var(--text-muted); line-height: 1.85; font-size: 1rem; }
+
+    .build-info p {
+      color: var(--text-muted);
+      line-height: 1.85;
+      font-size: 1rem;
+    }
 
     @media (max-width: 720px) {
+
       .build-row,
-      .build-row:nth-child(even) { flex-direction: column; }
-      .build-viewer { flex: none; width: 100%; }
+      .build-row:nth-child(even) {
+        flex-direction: column;
+      }
+
+      .build-viewer {
+        flex: none;
+        width: 100%;
+      }
     }
 
     .viewer-wrap {
@@ -50,7 +86,13 @@
       box-shadow: var(--shadow);
       background: #111;
     }
-    .viewer-wrap canvas { display: block; width: 100% !important; height: 100% !important; }
+
+    .viewer-wrap canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
     .viewer-loading {
       position: absolute;
       inset: 0;
@@ -65,20 +107,33 @@
       z-index: 10;
       transition: opacity 0.4s;
     }
-    .viewer-loading.hidden { opacity: 0; pointer-events: none; }
+
+    .viewer-loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
     .spin {
-      width: 34px; height: 34px;
-      border: 3px solid rgba(255,255,255,0.12);
+      width: 34px;
+      height: 34px;
+      border: 3px solid rgba(255, 255, 255, 0.12);
       border-top-color: var(--primary);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     .viewer-hint {
       position: absolute;
-      bottom: 10px; right: 12px;
+      bottom: 10px;
+      right: 12px;
       font-size: 0.72rem;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255, 255, 255, 0.35);
       pointer-events: none;
       user-select: none;
       letter-spacing: 0.02em;
@@ -96,6 +151,7 @@
       padding-top: 48px;
       border-top: 1px solid var(--border);
     }
+
     .tech-section h2 {
       font-size: 1.1rem;
       font-weight: 700;
@@ -104,38 +160,66 @@
       padding-left: 12px;
       margin-bottom: 16px;
     }
-    .tech-list { display: flex; flex-wrap: wrap; gap: 10px; }
-    .section-hint {
-      font-size: 0.78rem; font-weight: 400;
-      color: var(--text-muted); opacity: 0.65;
-      margin-left: 10px; vertical-align: middle;
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .tooltip-chip { position: relative; cursor: default; }
+
+    .section-hint {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      opacity: 0.65;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    .tooltip-chip {
+      position: relative;
+      cursor: default;
+    }
+
     .tooltip-chip::after {
       content: attr(data-tip);
       position: absolute;
-      top: calc(100% + 10px); left: 50%;
+      top: calc(100% + 10px);
+      left: 50%;
       transform: translateX(-50%);
-      background: var(--surface); color: var(--text-muted);
-      font-size: 0.82rem; padding: 5px 14px;
-      border-radius: 100px; border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      white-space: nowrap; opacity: 0;
-      pointer-events: none; transition: opacity 0.2s;
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
     }
+
     .tooltip-chip::before {
       content: '';
       position: absolute;
-      top: calc(100% + 3px); left: 50%;
+      top: calc(100% + 3px);
+      left: 50%;
       transform: translateX(-50%);
       border: 6px solid transparent;
       border-bottom-color: var(--border);
-      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
     }
+
     .tooltip-chip:hover::after,
-    .tooltip-chip:hover::before { opacity: 1; }
+    .tooltip-chip:hover::before {
+      opacity: 1;
+    }
   </style>
 </head>
+
 <body>
 
   <!-- Nav -->
@@ -198,11 +282,11 @@
         </div>
         <div class="build-info">
           <div class="build-meta">
-            <span class="skill-chip">Minecraft Java Edition</span>
+            <span class="skill-chip">大型</span>
             <span class="skill-chip">教堂</span>
           </div>
-          <h2>Church</h2>
-          <p>規模較大的教堂建築，以石磚與彩色玻璃為主要材料，高聳的尖頂與對稱的立面設計是這棟建築的主要特色，花了相當長的時間完成。</p>
+          <h2>婚禮大教堂</h2>
+          <p>非常不正統的教堂設計，但東拼西湊總算是蓋出來。如標題這棟建築當初蓋來是為了幫朋友在遊戲裡結婚，非常值得</p>
         </div>
       </div>
 
@@ -230,12 +314,12 @@
   </script>
   <script type="module">
     import * as THREE from 'three';
-    import { OBJLoader }     from 'three/addons/loaders/OBJLoader.js';
-    import { MTLLoader }     from 'three/addons/loaders/MTLLoader.js';
+    import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+    import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
     function createViewer(wrapId, loadingId, modelName) {
-      const wrap      = document.getElementById(wrapId);
+      const wrap = document.getElementById(wrapId);
       const loadingEl = document.getElementById(loadingId);
 
       function showError(msg) {
@@ -261,9 +345,9 @@
       scene.add(fill);
 
       const controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableDamping   = true;
-      controls.dampingFactor   = 0.07;
-      controls.autoRotate      = true;
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.07;
+      controls.autoRotate = true;
       controls.autoRotateSpeed = 0.7;
       controls.addEventListener('start', () => { controls.autoRotate = false; });
 
@@ -286,14 +370,14 @@
         objLoader.load(
           modelName + '.obj',
           (obj) => {
-            const box    = new THREE.Box3().setFromObject(obj);
+            const box = new THREE.Box3().setFromObject(obj);
             const center = box.getCenter(new THREE.Vector3());
-            const size   = box.getSize(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
             obj.position.sub(center);
             scene.add(obj);
 
             const maxDim = Math.max(size.x, size.y, size.z);
-            const dist   = maxDim * 1.8;
+            const dist = maxDim * 1.8;
             controls.target.set(0, -size.y * 0.25, 0);
             camera.position.set(dist * 0.8, maxDim * 0.6, dist);
             controls.minDistance = maxDim * 0.15;
@@ -318,4 +402,5 @@
     createViewer('viewer1', 'loading1', 'church');
   </script>
 </body>
+
 </html>

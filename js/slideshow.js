@@ -18,6 +18,13 @@ function initSlideshow(card) {
   const n = images.length;
   let current = 0;
   let timer   = null;
+  let paused  = false;
+
+  // Pause indicator
+  const pauseIcon = document.createElement('div');
+  pauseIcon.className = 'slideshow-pause-icon';
+  pauseIcon.textContent = '⏸';
+  track.appendChild(pauseIcon);
 
   // Build slides
   const slideEls = images.map((src, i) => {
@@ -81,15 +88,35 @@ function initSlideshow(card) {
 
   function goNext() { current = mod(current + 1, n); render(); }
   function goPrev() { current = mod(current - 1, n); render(); }
-  function resetTimer() { clearInterval(timer); timer = setInterval(goNext, INTERVAL); }
+
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(goNext, INTERVAL);
+  }
+  function resetTimer() { paused = false; pauseIcon.classList.remove('visible'); startTimer(); }
+  function pause()      { paused = true;  pauseIcon.classList.add('visible');    clearInterval(timer); }
 
   prevBtn.addEventListener('click', () => { goPrev(); resetTimer(); });
   nextBtn.addEventListener('click', () => { goNext(); resetTimer(); });
-  card.addEventListener('mouseenter', () => clearInterval(timer));
-  card.addEventListener('mouseleave', () => resetTimer());
+
+  card.addEventListener('mouseenter', pause);
+  card.addEventListener('mouseleave', resetTimer);
 
   render();
-  resetTimer();
+  startTimer();
 }
+
+// Keyboard: left/right arrows control whichever card the mouse is over
+let hoveredCard = null;
+document.querySelectorAll('.slideshow-card[data-images]').forEach(card => {
+  card.addEventListener('mouseenter', () => { hoveredCard = card; });
+  card.addEventListener('mouseleave', () => { if (hoveredCard === card) hoveredCard = null; });
+});
+
+document.addEventListener('keydown', (e) => {
+  if (!hoveredCard) return;
+  if (e.key === 'ArrowLeft')  hoveredCard.querySelector('.prev-btn')?.click();
+  if (e.key === 'ArrowRight') hoveredCard.querySelector('.next-btn')?.click();
+});
 
 document.querySelectorAll('.slideshow-card[data-images]').forEach(initSlideshow);

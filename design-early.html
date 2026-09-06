@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>早期作品 — 林子茵 Portfolio</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    .back-link { margin-bottom: 36px; }
+    .back-link {
+      margin-bottom: 36px;
+    }
+
     .back-link a {
       color: var(--text-muted);
       font-size: 0.9rem;
       text-decoration: none;
       transition: color 0.15s;
     }
-    .back-link a:hover { color: var(--primary); }
+
+    .back-link a:hover {
+      color: var(--primary);
+    }
 
     .build-row {
       display: flex;
@@ -21,22 +28,51 @@
       align-items: flex-start;
       margin-bottom: 72px;
     }
-    .builds-list .build-row:nth-child(even) { flex-direction: row-reverse; }
-    .build-viewer { flex: 0 0 56%; }
-    .build-info { flex: 1; padding-top: 4px; }
-    .build-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+
+    .builds-list .build-row:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .build-viewer {
+      flex: 0 0 56%;
+    }
+
+    .build-info {
+      flex: 1;
+      padding-top: 4px;
+    }
+
+    .build-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
     .build-info h2 {
       font-size: 1.35rem;
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 14px;
     }
-    .build-info p { color: var(--text-muted); line-height: 1.85; font-size: 1rem; }
+
+    .build-info p {
+      color: var(--text-muted);
+      line-height: 1.85;
+      font-size: 1rem;
+    }
 
     @media (max-width: 720px) {
+
       .build-row,
-      .build-row:nth-child(even) { flex-direction: column; }
-      .build-viewer { flex: none; width: 100%; }
+      .build-row:nth-child(even) {
+        flex-direction: column;
+      }
+
+      .build-viewer {
+        flex: none;
+        width: 100%;
+      }
     }
 
     .viewer-wrap {
@@ -50,7 +86,13 @@
       box-shadow: var(--shadow);
       background: #111;
     }
-    .viewer-wrap canvas { display: block; width: 100% !important; height: 100% !important; }
+
+    .viewer-wrap canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
     .viewer-loading {
       position: absolute;
       inset: 0;
@@ -65,20 +107,33 @@
       z-index: 10;
       transition: opacity 0.4s;
     }
-    .viewer-loading.hidden { opacity: 0; pointer-events: none; }
+
+    .viewer-loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
     .spin {
-      width: 34px; height: 34px;
-      border: 3px solid rgba(255,255,255,0.12);
+      width: 34px;
+      height: 34px;
+      border: 3px solid rgba(255, 255, 255, 0.12);
       border-top-color: var(--primary);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     .viewer-hint {
       position: absolute;
-      bottom: 10px; right: 12px;
+      bottom: 10px;
+      right: 12px;
       font-size: 0.72rem;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255, 255, 255, 0.35);
       pointer-events: none;
       user-select: none;
       letter-spacing: 0.02em;
@@ -96,6 +151,7 @@
       padding-top: 48px;
       border-top: 1px solid var(--border);
     }
+
     .tech-section h2 {
       font-size: 1.1rem;
       font-weight: 700;
@@ -104,38 +160,66 @@
       padding-left: 12px;
       margin-bottom: 16px;
     }
-    .tech-list { display: flex; flex-wrap: wrap; gap: 10px; }
-    .section-hint {
-      font-size: 0.78rem; font-weight: 400;
-      color: var(--text-muted); opacity: 0.65;
-      margin-left: 10px; vertical-align: middle;
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .tooltip-chip { position: relative; cursor: default; }
+
+    .section-hint {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      opacity: 0.65;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    .tooltip-chip {
+      position: relative;
+      cursor: default;
+    }
+
     .tooltip-chip::after {
       content: attr(data-tip);
       position: absolute;
-      top: calc(100% + 10px); left: 50%;
+      top: calc(100% + 10px);
+      left: 50%;
       transform: translateX(-50%);
-      background: var(--surface); color: var(--text-muted);
-      font-size: 0.82rem; padding: 5px 14px;
-      border-radius: 100px; border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      white-space: nowrap; opacity: 0;
-      pointer-events: none; transition: opacity 0.2s;
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
     }
+
     .tooltip-chip::before {
       content: '';
       position: absolute;
-      top: calc(100% + 3px); left: 50%;
+      top: calc(100% + 3px);
+      left: 50%;
       transform: translateX(-50%);
       border: 6px solid transparent;
       border-bottom-color: var(--border);
-      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
     }
+
     .tooltip-chip:hover::after,
-    .tooltip-chip:hover::before { opacity: 1; }
+    .tooltip-chip:hover::before {
+      opacity: 1;
+    }
   </style>
 </head>
+
 <body>
 
   <!-- Nav -->
@@ -177,7 +261,7 @@
   <!-- Page Hero -->
   <div class="page-hero">
     <h1>早期作品</h1>
-    <p>剛開始建築時的嘗試，風格還在摸索中</p>
+    <p>生存模式需要住的地方，這些建築就這樣誕生了</p>
   </div>
 
   <section class="section">
@@ -199,11 +283,11 @@
           </div>
           <div class="build-info">
             <div class="build-meta">
-              <span class="skill-chip">Minecraft Java Edition</span>
+              <span class="skill-chip">超小型</span>
               <span class="skill-chip">溫室</span>
             </div>
             <h2>小溫室</h2>
-            <p>早期嘗試建造的小型玻璃溫室，以玻璃板與木材搭建而成，是練習透明材質應用的初期作品。</p>
+            <p>為了養蜜蜂做的，要好看的把他們關起來一定就是溫室對吧</p>
           </div>
         </div>
 
@@ -219,11 +303,11 @@
           </div>
           <div class="build-info">
             <div class="build-meta">
-              <span class="skill-chip">Minecraft Java Edition</span>
+              <span class="skill-chip">小型</span>
               <span class="skill-chip">溫室</span>
             </div>
             <h2>溫室</h2>
-            <p>較大規模的溫室建築，內部空間寬敞，種植區域配置有條有理，是小溫室的進階嘗試。</p>
+            <p>當初獲得了全種類的花，迫不及待想展示出來，就建造了這個溫室</p>
           </div>
         </div>
 
@@ -239,11 +323,13 @@
           </div>
           <div class="build-info">
             <div class="build-meta">
-              <span class="skill-chip">Minecraft Java Edition</span>
-              <span class="skill-chip">工坊</span>
+              <span class="skill-chip">中型</span>
+              <span class="skill-chip">自動熔爐</span>
+              <span class="skill-chip">自助燃料</span>
+              <span class="skill-chip">功能性</span>
             </div>
-            <h2>熔爐</h2>
-            <p>以熔爐為主題設計的工業風建築，外觀以石磚與鐵塊堆砌，散發出粗獷的工坊氛圍。</p>
+            <h2>自動熔爐</h2>
+            <p>機器很有效率沒錯，但我無法接受他的外表，所以包了個殼。後來覺得自己補燃料好麻煩，就做了個自動竹子機，當然也幫它包了殼，中間用冰道連結</p>
           </div>
         </div>
 
@@ -259,11 +345,11 @@
           </div>
           <div class="build-info">
             <div class="build-meta">
-              <span class="skill-chip">Minecraft Java Edition</span>
-              <span class="skill-chip">工坊</span>
+              <span class="skill-chip">小型</span>
+              <span class="skill-chip">功能性</span>
             </div>
             <h2>羊毛工坊</h2>
-            <p>以各色羊毛方塊組成的繽紛建築，是早期探索色彩搭配的實驗性作品，外觀鮮豔活潑。</p>
+            <p>16種顏色的羊毛一應俱全，配備巨大儲存空間</p>
           </div>
         </div>
 
@@ -279,11 +365,12 @@
           </div>
           <div class="build-info">
             <div class="build-meta">
-              <span class="skill-chip">Minecraft Java Edition</span>
-              <span class="skill-chip">小屋</span>
+              <span class="skill-chip">小型</span>
+              <span class="skill-chip">功能性</span>
+              <span class="skill-chip">特殊造型</span>
             </div>
-            <h2>Honey</h2>
-            <p>早期嘗試打造的建築之一，以溫暖的黃棕色調為主，整體風格簡單樸實，是當時練習空間配置與材質搭配的成果。</p>
+            <h2>蜂蜜小屋</h2>
+            <p>建築前懸吊的蜂巢及屋頂加入新造型是我建築的一大進步，從那時開始用材更多變化了，裡面是自動化的蜂蜜機</p>
           </div>
         </div>
 
@@ -299,11 +386,11 @@
           </div>
           <div class="build-info">
             <div class="build-meta">
-              <span class="skill-chip">Minecraft Java Edition</span>
-              <span class="skill-chip">農場</span>
+              <span class="skill-chip">小型</span>
+              <span class="skill-chip">功能性</span>
             </div>
-            <h2>雞舍</h2>
-            <p>小巧的雞舍建築，以木材與柵欄搭建，外觀簡單溫馨，是農場系列早期作品之一。</p>
+            <h2>烤雞</h2>
+            <p>自己用弄到食物好麻煩，又做了自動化獲取烤雞的機器，又包了殼</p>
           </div>
         </div>
 
@@ -319,11 +406,11 @@
           </div>
           <div class="build-info">
             <div class="build-meta">
-              <span class="skill-chip">Minecraft Java Edition</span>
-              <span class="skill-chip">農場</span>
+              <span class="skill-chip">中型</span>
+              <span class="skill-chip">功能性</span>
             </div>
-            <h2>甘蔗農場</h2>
-            <p>排列整齊的甘蔗田搭配木製儲藏室，呈現出農業生產的樣貌，是早期農場建築系列的收尾之作。</p>
+            <h2>甘蔗竹子農場</h2>
+            <p>這兩個作物的生長方式非常相似，那當然機器也能一起造，一樓當作機器放置及儲存，二樓當作起居室</p>
           </div>
         </div>
 
@@ -339,11 +426,11 @@
           </div>
           <div class="build-info">
             <div class="build-meta">
-              <span class="skill-chip">Minecraft Java Edition</span>
+              <span class="skill-chip">小型</span>
               <span class="skill-chip">住宅</span>
             </div>
             <h2>白色住宅</h2>
-            <p>以白色混凝土與石英為主材料的現代風住宅，簡潔的線條與大面積白牆是其特色。</p>
+            <p>使用了自己不常使用的淺色系建材</p>
           </div>
         </div>
 
@@ -359,11 +446,11 @@
           </div>
           <div class="build-info">
             <div class="build-meta">
-              <span class="skill-chip">Minecraft Java Edition</span>
+              <span class="skill-chip">小型</span>
               <span class="skill-chip">住宅</span>
             </div>
             <h2>紅色住宅</h2>
-            <p>紅磚外牆的傳統風格住宅，溫暖的色調搭配木製屋頂，是早期探索建築風格時的嘗試。</p>
+            <p>開始對混材料及建築形狀有了概念，因此產生了這棟屋頂較特殊的建築</p>
           </div>
         </div>
 
@@ -379,11 +466,12 @@
           </div>
           <div class="build-info">
             <div class="build-meta">
-              <span class="skill-chip">Minecraft Java Edition</span>
-              <span class="skill-chip">小屋</span>
+              <span class="skill-chip">中型</span>
+              <span class="skill-chip">功能性</span>
+              <span class="skill-chip">特殊造型</span>
             </div>
-            <h2>女巫小屋</h2>
-            <p>靈感來自童話故事的女巫小屋，歪斜的屋頂與黑色木材外觀充滿神秘感，是早期風格探索中最有趣的一棟。</p>
+            <h2>女巫塔</h2>
+            <p>其實是個刷怪塔，因為線路及機器本身的範圍做成了高塔及設邊的附屬建築，內部包含了多數紅石電路及自動分類機，外觀則是融合了之前學會的東西，可以說是早期最滿意的作品了</p>
           </div>
         </div>
 
@@ -413,12 +501,12 @@
   </script>
   <script type="module">
     import * as THREE from 'three';
-    import { OBJLoader }     from 'three/addons/loaders/OBJLoader.js';
-    import { MTLLoader }     from 'three/addons/loaders/MTLLoader.js';
+    import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+    import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
     function createViewer(wrapId, loadingId, modelName) {
-      const wrap      = document.getElementById(wrapId);
+      const wrap = document.getElementById(wrapId);
       const loadingEl = document.getElementById(loadingId);
 
       function showError(msg) {
@@ -444,9 +532,9 @@
       scene.add(fill);
 
       const controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableDamping   = true;
-      controls.dampingFactor   = 0.07;
-      controls.autoRotate      = true;
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.07;
+      controls.autoRotate = true;
       controls.autoRotateSpeed = 0.7;
       controls.addEventListener('start', () => { controls.autoRotate = false; });
 
@@ -469,14 +557,14 @@
         objLoader.load(
           modelName + '.obj',
           (obj) => {
-            const box    = new THREE.Box3().setFromObject(obj);
+            const box = new THREE.Box3().setFromObject(obj);
             const center = box.getCenter(new THREE.Vector3());
-            const size   = box.getSize(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
             obj.position.sub(center);
             scene.add(obj);
 
             const maxDim = Math.max(size.x, size.y, size.z);
-            const dist   = maxDim * 1.8;
+            const dist = maxDim * 1.8;
             controls.target.set(0, -size.y * 0.25, 0);
             camera.position.set(dist * 0.8, maxDim * 0.6, dist);
             controls.minDistance = maxDim * 0.15;
@@ -498,16 +586,17 @@
       })();
     }
 
-    createViewer('viewer1',  'loading1',  'sgreenhouse');
-    createViewer('viewer2',  'loading2',  'greenhouse');
-    createViewer('viewer3',  'loading3',  'furance');
-    createViewer('viewer4',  'loading4',  'wool');
-    createViewer('viewer5',  'loading5',  'honey');
-    createViewer('viewer6',  'loading6',  'chiken');
-    createViewer('viewer7',  'loading7',  'sugarcane');
-    createViewer('viewer8',  'loading8',  'livingwhite');
-    createViewer('viewer9',  'loading9',  'livingred');
+    createViewer('viewer1', 'loading1', 'sgreenhouse');
+    createViewer('viewer2', 'loading2', 'greenhouse');
+    createViewer('viewer3', 'loading3', 'furance');
+    createViewer('viewer4', 'loading4', 'wool');
+    createViewer('viewer5', 'loading5', 'honey');
+    createViewer('viewer6', 'loading6', 'chiken');
+    createViewer('viewer7', 'loading7', 'sugarcane');
+    createViewer('viewer8', 'loading8', 'livingwhite');
+    createViewer('viewer9', 'loading9', 'livingred');
     createViewer('viewer10', 'loading10', 'witch');
   </script>
 </body>
+
 </html>
