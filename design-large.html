@@ -185,7 +185,26 @@
 
       <div class="back-link"><a href="design.html">← 返回建築總覽</a></div>
 
-      <p class="empty-state">尚無作品，建築陸續整理中。</p>
+      <!-- 建築 1：Church -->
+      <div class="build-row">
+        <div class="build-viewer">
+          <div class="viewer-wrap" id="viewer1">
+            <div class="viewer-loading" id="loading1">
+              <div class="spin"></div>
+              <span>載入模型中…</span>
+            </div>
+            <div class="viewer-hint">拖曳旋轉 &nbsp;·&nbsp; 滾輪縮放 &nbsp;·&nbsp; 右鍵平移</div>
+          </div>
+        </div>
+        <div class="build-info">
+          <div class="build-meta">
+            <span class="skill-chip">Minecraft Java Edition</span>
+            <span class="skill-chip">教堂</span>
+          </div>
+          <h2>Church</h2>
+          <p>規模較大的教堂建築，以石磚與彩色玻璃為主要材料，高聳的尖頂與對稱的立面設計是這棟建築的主要特色，花了相當長的時間完成。</p>
+        </div>
+      </div>
 
     </div>
   </section>
@@ -199,5 +218,104 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+  <!-- Three.js 3D Viewer -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OBJLoader }     from 'three/addons/loaders/OBJLoader.js';
+    import { MTLLoader }     from 'three/addons/loaders/MTLLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    function createViewer(wrapId, loadingId, modelName) {
+      const wrap      = document.getElementById(wrapId);
+      const loadingEl = document.getElementById(loadingId);
+
+      function showError(msg) {
+        loadingEl.innerHTML = `<span style="color:#f87171;font-size:0.85rem;">⚠ ${msg}</span>`;
+      }
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      wrap.appendChild(renderer.domElement);
+
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x78A7FF);
+
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 5000);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+      const sun = new THREE.DirectionalLight(0xfff5e0, 1.4);
+      sun.position.set(1, 1.5, 1);
+      scene.add(sun);
+      const fill = new THREE.DirectionalLight(0xc8d8ff, 0.5);
+      fill.position.set(-1, 0.5, -1);
+      scene.add(fill);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping   = true;
+      controls.dampingFactor   = 0.07;
+      controls.autoRotate      = true;
+      controls.autoRotateSpeed = 0.7;
+      controls.addEventListener('start', () => { controls.autoRotate = false; });
+
+      function resize() {
+        const w = wrap.clientWidth, h = wrap.clientHeight;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+      new ResizeObserver(resize).observe(wrap);
+      resize();
+
+      const mtlLoader = new MTLLoader();
+      mtlLoader.setPath('assets/models/');
+      mtlLoader.load(modelName + '.mtl', (materials) => {
+        materials.preload();
+        const objLoader = new OBJLoader();
+        objLoader.setMaterials(materials);
+        objLoader.setPath('assets/models/');
+        objLoader.load(
+          modelName + '.obj',
+          (obj) => {
+            const box    = new THREE.Box3().setFromObject(obj);
+            const center = box.getCenter(new THREE.Vector3());
+            const size   = box.getSize(new THREE.Vector3());
+            obj.position.sub(center);
+            scene.add(obj);
+
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const dist   = maxDim * 1.8;
+            controls.target.set(0, -size.y * 0.25, 0);
+            camera.position.set(dist * 0.8, maxDim * 0.6, dist);
+            controls.minDistance = maxDim * 0.15;
+            controls.maxDistance = maxDim * 6;
+            controls.update();
+
+            loadingEl.classList.add('hidden');
+            setTimeout(() => { loadingEl.style.display = 'none'; }, 420);
+          },
+          null,
+          (e) => showError('OBJ 載入失敗: ' + (e && e.message ? e.message : e))
+        );
+      }, null, (e) => showError('MTL 載入失敗: ' + (e && e.message ? e.message : e)));
+
+      (function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      })();
+    }
+
+    createViewer('viewer1', 'loading1', 'church');
+  </script>
 </body>
 </html>
